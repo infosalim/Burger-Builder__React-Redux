@@ -12,7 +12,7 @@ class ContactData extends Component {
             name: {
                 elementType: 'input',
                 elementConfig: {
-                    tyoe: 'text',
+                    type: 'text',
                     placeholder: 'Your Name'
                 },
                 value: ''
@@ -20,7 +20,7 @@ class ContactData extends Component {
             street: {
                 elementType: 'input',
                 elementConfig: {
-                    tyoe: 'text',
+                    type: 'text',
                     placeholder: 'Street'
                 },
                 value: ''
@@ -28,7 +28,7 @@ class ContactData extends Component {
             zipCode: {
                 elementType: 'input',
                 elementConfig: {
-                    tyoe: 'text',
+                    type: 'text',
                     placeholder: 'ZIP Code'
                 },
                 value: ''
@@ -36,7 +36,7 @@ class ContactData extends Component {
             country: {
                 elementType: 'input',
                 elementConfig: {
-                    tyoe: 'text',
+                    type: 'text',
                     placeholder: 'Country'
                 },
                 value: ''
@@ -44,7 +44,7 @@ class ContactData extends Component {
             email: {
                 elementType: 'input',
                 elementConfig: {
-                    tyoe: 'email',
+                    type: 'email',
                     placeholder: 'Your Email'
                 },
                 value: ''
@@ -88,7 +88,6 @@ render() {
             config: this.state.orderForm[key]
         })
     }
-    console.log(formElementsArray);
 
     let form = (
         <form>
