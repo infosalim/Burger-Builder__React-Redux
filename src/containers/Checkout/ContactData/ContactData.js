@@ -63,55 +63,68 @@ class ContactData extends Component {
         loading: false
     }
 
-orderHandler = (event) => {
-    event.preventDefault();
-    this.setState({ loading: true });
-    const order = {
-        ingredients: this.props.ingredients,
-        price: this.props.price
-    }
-    axios.post('/orders.json', order)
-        .then(response => {
-            this.setState({ loading: false });
-            this.props.history.push('/');
-        })
-        .catch(err => {
-            this.setState({ loading: false });
-        });
-}
-
-render() {
-    const formElementsArray = [];
-    for (let key in this.state.orderForm) {
-        formElementsArray.push({
-            id: key,
-            config: this.state.orderForm[key]
-        })
+    orderHandler = (event) => {
+        event.preventDefault();
+        this.setState({ loading: true });
+        const order = {
+            ingredients: this.props.ingredients,
+            price: this.props.price
+        }
+        axios.post('/orders.json', order)
+            .then(response => {
+                this.setState({ loading: false });
+                this.props.history.push('/');
+            })
+            .catch(err => {
+                this.setState({ loading: false });
+            });
     }
 
-    let form = (
-        <form>
-            {formElementsArray.map(formElement => (
-                <Input
-                    key={formElement.id}
-                    elementType={formElement.config.elementType}
-                    elementConfig={formElement.config.elementConfig}
-                    value={formElement.config.value} />
-            ))}
-            <Button btnType='Success' clicked={this.orderHandler}>ORDER</Button>
-        </form>
-    );
-
-    if (this.state.loading) {
-        form = <Spinner />
+    inputchangedHandler = (event, inputIdentifier) => {
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        }
+        const updatedFormElement = {
+            ...updatedOrderForm[inputIdentifier]
+        }
+        updatedFormElement.value = event.target.value;
+        updatedOrderForm[inputIdentifier] = updatedFormElement;
+        this.setState({orderForm: updatedOrderForm});
     }
-    return (
-        <div className={classes.ContactData}>
-            <h4>Enter Your Contact Data</h4>
-            {form}
-        </div>
-    );
-}
+
+    render() {
+        const formElementsArray = [];
+        for (let key in this.state.orderForm) {
+            formElementsArray.push({
+                id: key,
+                config: this.state.orderForm[key]
+            })
+        }
+
+        let form = (
+            <form>
+                {formElementsArray.map(formElement => (
+                    <Input
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value}
+                        changed={(event) => this.inputchangedHandler(event, formElement.id)} />
+                ))}
+                <Button btnType='Success' clicked={this.orderHandler}>ORDER</Button>
+            </form>
+        );
+
+        if (this.state.loading) {
+            form = <Spinner />
+        }
+        return (
+            <div className={classes.ContactData}>
+                <h4>Enter Your Contact Data</h4>
+                {form}
+            </div>
+        );
+    }
 }
 
 export default ContactData;
